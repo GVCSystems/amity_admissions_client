@@ -1,4 +1,3 @@
-#!/usr/bin/python
 
 """
 
@@ -20,10 +19,9 @@ SaveID - send ATWR
 Write ID -send ATID ID<CR>
 
 
-
 def DisplayData ():
     x=serdev.read()
-    print (format(ord(x),'02x'))
+    print (format(ord(x),'02x')),
     
 
 # Beginning of program
@@ -33,6 +31,9 @@ def DisplayData ():
 
 while (True):
     CaptureData()
+
+                     
+
 
 """
 
@@ -48,7 +49,7 @@ import time
 
 import os
 
-global serdev,SerialPortFound,DeviceConnected,Debug,ID
+global serdev,SerialPortFound,DeviceConnected,Debug,ID,TokenValue,Mode
 global HeaderFound,TargetFound,RxBytes,Token,UnitNumber,Waiting,PreviousWaiting
 global T1,T2,T3,T4,T5,T6,T7    
 
@@ -57,7 +58,7 @@ global tokens
 
 
 root = Tkinter.Tk()
-#root.attributes('-fullscreen',True)
+
 #root.state('zoomed')
 PreviousWaiting=0
 
@@ -68,9 +69,8 @@ FT=90
 FH=50
 WID=5
 
-#uncomment when running on RPi with BigScreen
-#FT=120;FH=100;WID=6
-
+#uncomment when running on RPi 
+#FT=120;FH=100;WID=6;root.attributes('-fullscreen',True)
 
 def music():
     from pygame import mixer # Load the required library
@@ -79,7 +79,6 @@ def music():
     mixer.music.play()
     import time
     time.sleep(1.5);
-
 
 def SetSerialPort ():
     ###First part for initializing serial port
@@ -121,12 +120,12 @@ def SetSerialPort ():
 
 def CaptureData ():
     global HeaderFound,TargetFound,RxBytes,Token,UnitNumber,Waiting,PreviousWaiting
-    global T1,T2,T3,T4,T5,T6,T7
+    global T1,T2,T3,T4,T5,T6,T7,TokenValue,Mode
     AttendingColor="GREEN"
     WaitingColor="RED"
-    HeaderFound = 0
-    TargetFound = 0
-    RxBytes = 0;
+    #HeaderFound = 0
+    #TargetFound = 0
+    #RxBytes = 0;
     while (1):
         x=serdev.read()
         if len(x) == 0:
@@ -136,14 +135,14 @@ def CaptureData ():
             TargetFound = 0
             RxBytes = 1;
         elif RxBytes == 1 and HeaderFound == 1:
-                if ord(x) == 0x55:
-                    TargetFound = 1
-                    HeaderFound = 0
-                    RxBytes = 2
-                else:
-                    TargetFound = 0
-                    HeaderFound = 0
-                    RxBytes = 0
+            if ord(x) == 0x55:
+                TargetFound = 1
+                HeaderFound = 0
+                RxBytes = 2
+            else:
+                TargetFound = 0
+                HeaderFound = 0
+                RxBytes = 0
         elif RxBytes == 2:
             RxBytes = 3
             print
@@ -156,7 +155,7 @@ def CaptureData ():
             else:
                 Mode = 0
                 print (' '),
-            RxBytes = 4
+            RxBytes = 4    
         elif RxBytes == 4:
             if ord(x) == 0x00:
                 print ("DISP"),
@@ -164,7 +163,7 @@ def CaptureData ():
                 print ("SETM"),
             elif ord(x) == 0x06:
                 print ("BUZZ"),
-                #music()
+                music()
             else:
                 print ("    "),
             RxBytes = 5
@@ -235,7 +234,7 @@ def CaptureData ():
                 
         else:
             RxBytes = 0
-    root.after(10,CaptureData)
+    root.after(5,CaptureData)
 
 
 print ("Start Program")
@@ -243,6 +242,8 @@ SerialPortFound = 0
 DeviceConnected = 0
 Debug = 0
 SetSerialPort()
+RxBytes = 0
+TokenValue = ''
 
 WaitingText = Tkinter.StringVar()
 
@@ -287,8 +288,7 @@ T2 = Tkinter.Label(root, textvariable=T2Text, font=("Helvetica", FT),borderwidth
             width=WID,height=1)
 T2.grid(row=2,column=1)
 
-T6 = Tkinter.Label(root, textvariable=T6Text, font=("Helvetica", FT),borderwidth=2, relief="groove",
-            width=WID,height=1)
+T6 = Tkinter.Label(root, textvariable=T6Text, font=("Helvetica", FT),borderwidth=2, relief="groove",width=WID,height=1)
 T6.grid(row=2,column=3)
 
 T3 = Tkinter.Label(root, textvariable=T3Text, font=("Helvetica", FT),borderwidth=2, relief="groove",
@@ -307,7 +307,7 @@ CountWaiting = Tkinter.Label(root, text='', font=("Helvetica", FT),borderwidth=2
             width=WID,height=1).grid(row=4,column=3)
 
 
-root.after(100,CaptureData)        
+root.after(20,CaptureData)        
 root.mainloop()
 
  
