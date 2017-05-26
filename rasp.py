@@ -72,14 +72,6 @@ WID=5
 #uncomment when running on RPi 
 #FT=120;FH=100;WID=6;root.attributes('-fullscreen',True)
 
-def music():
-    from pygame import mixer # Load the required library
-    mixer.init()
-    mixer.music.load('sound.mp3')
-    mixer.music.play()
-    import time
-    time.sleep(1.5);
-
 def SetSerialPort ():
     ###First part for initializing serial port
     global serdev,SerialPortFound,DeviceConnected
@@ -163,7 +155,6 @@ def CaptureData ():
                 print ("SETM"),
             elif ord(x) == 0x06:
                 print ("BUZZ"),
-                music()
             else:
                 print ("    "),
             RxBytes = 5
