@@ -1,39 +1,24 @@
 
 """
+Instructions to make it autorun on boot
 
-Try7 - Display both waiting and attending
-Try6 - working - display only waiting 
+place the file on Desktop and name it something like "rasp.py"
 
-SetSerialPort - Choose first port with USB in it
-Set variable SerialPortFound
+Step 1:
+	cd /home/pi/.config/lxsession/LXDE-pi
 
+Step 2:
+	modify file "autostart"
+	open the file using nano
+	nano autostart
 
-ConnectDevice - send +++ and look for OK
-if found set DeviceConnected to 1
+	add this line at the end:
+	@/usr/bin/sudo /usr/bin/python /home/pi/Desktop/rasp.py
+	
+	press Ctrl-X , Y , <Enter>
 
-ReadID
-Send ATID <CR> and reply is put in ID
-
-SaveID - send ATWR
-
-Write ID -send ATID ID<CR>
-
-
-def DisplayData ():
-    x=serdev.read()
-    print (format(ord(x),'02x')),
-    
-
-# Beginning of program
-# first sense serial port
-# and then capture data
-
-
-while (True):
-    CaptureData()
-
-                     
-
+Step 3: 
+	reboot
 
 """
 
