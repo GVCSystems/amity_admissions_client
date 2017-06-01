@@ -47,7 +47,7 @@ root = Tkinter.Tk()
 #root.state('zoomed')
 PreviousWaiting=0
 
-CABIN="#"
+CABIN="Cab"
 TOKEN="Token"
 
 FT=90
@@ -55,7 +55,7 @@ FH=50
 WID=5
 
 #uncomment when running on RPi 
-#FT=120;FH=100;WID=6;root.attributes('-fullscreen',True)
+FT=120;FH=100;WID=5;root.attributes('-fullscreen',True)
 
 def SetSerialPort ():
     ###First part for initializing serial port
@@ -233,14 +233,14 @@ T7Text = Tkinter.StringVar()
 
 T1Text.set
 
-Tkinter.Label(root, text=CABIN, font=("Helvetica", FH+20),borderwidth=2, 
-            width=2,height=1).grid(row=0,column=0)
-Tkinter.Label(root, text=TOKEN, font=("Helvetica", FH),borderwidth=2, 
-            width=6,height=1).grid(row=0,column=1)
-Tkinter.Label(root, text=CABIN, font=("Helvetica", FH+20),borderwidth=2, 
-            width=2,height=1).grid(row=0,column=2)
-Tkinter.Label(root, text=TOKEN, font=("Helvetica", FH),borderwidth=2, 
-            width=6,height=1).grid(row=0,column=3)
+Tkinter.Label(root, text=CABIN, font=("Helvetica", FH+0),borderwidth=1, 
+            width=3,height=1).grid(row=0,column=0)
+Tkinter.Label(root, text=TOKEN, font=("Helvetica", FH),borderwidth=1, 
+            width=5,height=1).grid(row=0,column=1)
+Tkinter.Label(root, text=CABIN, font=("Helvetica", FH+0),borderwidth=1, 
+            width=3,height=1).grid(row=0,column=2)
+Tkinter.Label(root, text=TOKEN, font=("Helvetica", FH),borderwidth=1, 
+            width=5,height=1).grid(row=0,column=3)
 
 for r in range(4):
         Tkinter.Label(root, text=str(r+1), font=("Helvetica", FT),borderwidth=2, relief="groove",
