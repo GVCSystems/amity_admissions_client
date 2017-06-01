@@ -20,6 +20,19 @@ Step 2:
 Step 3: 
 	reboot
 
+Instructions to enable SSH
+
+Step 1:
+	open terminal type "sudo raspi-config"
+Step 2:
+	click on Interface Option
+Step 3:
+	Click on SSH
+Step 4:
+	click on Yes, wait for 2 seconds
+Step 5:
+	click OK then Finish
+	
 """
 
 
